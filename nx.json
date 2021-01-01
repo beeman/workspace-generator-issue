@@ -25,6 +25,9 @@
   "projects": {
     "native": {
       "tags": []
+    },
+    "native-post": {
+      "tags": ["scope:native"]
     }
   }
 }

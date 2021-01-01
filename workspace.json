@@ -1,33 +1,31 @@
 {
-  "version": 2,
+  "version": 1,
   "projects": {
     "native": {
       "root": "apps/native",
       "sourceRoot": "apps/native/src",
       "projectType": "application",
-      "generators": {},
-      "targets": {
+      "schematics": {},
+      "architect": {
         "start": {
-          "executor": "@nrwl/react-native:start",
+          "builder": "@nrwl/react-native:start",
           "options": {
             "port": 8081
           }
         },
         "serve": {
-          "executor": "@nrwl/workspace:run-commands",
+          "builder": "@nrwl/workspace:run-commands",
           "options": {
             "command": "nx start native"
           }
         },
         "run-ios": {
-          "executor": "@nrwl/react-native:run-ios",
+          "builder": "@nrwl/react-native:run-ios",
           "options": {}
         },
         "bundle-ios": {
-          "executor": "@nrwl/react-native:bundle",
-          "outputs": [
-            "apps/native/build"
-          ],
+          "builder": "@nrwl/react-native:bundle",
+          "outputs": ["apps/native/build"],
           "options": {
             "entryFile": "apps/native/src/main.tsx",
             "platform": "ios",
@@ -35,11 +33,11 @@
           }
         },
         "run-android": {
-          "executor": "@nrwl/react-native:run-android",
+          "builder": "@nrwl/react-native:run-android",
           "options": {}
         },
         "build-android": {
-          "executor": "@nrwl/react-native:build-android",
+          "builder": "@nrwl/react-native:build-android",
           "outputs": [
             "apps/native/android/app/build/outputs/bundle",
             "apps/native/android/app/build/outputs/apk"
@@ -47,7 +45,7 @@
           "options": {}
         },
         "bundle-android": {
-          "executor": "@nrwl/react-native:bundle",
+          "builder": "@nrwl/react-native:bundle",
           "options": {
             "entryFile": "apps/native/src/main.tsx",
             "platform": "android",
@@ -55,21 +53,40 @@
           }
         },
         "lint": {
-          "executor": "@nrwl/linter:eslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/native/**/*.{js,ts,tsx}"
-            ]
+            "lintFilePatterns": ["apps/native/**/*.{js,ts,tsx}"]
           }
         },
         "sync-deps": {
-          "executor": "@nrwl/react-native:sync-deps",
+          "builder": "@nrwl/react-native:sync-deps",
           "options": {}
         },
         "test": {
-          "executor": "@nrwl/jest:jest",
+          "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/native/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "native-post": {
+      "root": "libs/native/post",
+      "sourceRoot": "libs/native/post/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/native/post/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/native/post/jest.config.js",
             "passWithNoTests": true
           }
         }
